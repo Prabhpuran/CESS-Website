@@ -92,7 +92,7 @@
 /* The event cards travel in a 3D ring around a softly lit globe. */
 .orbit-stage {
   position: relative;
-  height: clamp(480px, 52vw, 680px);
+  height: clamp(500px, 92vw, 680px);
   min-height: 470px;
   overflow: hidden;
   perspective: 2000px;
@@ -104,7 +104,7 @@
 .orbit-card {
   position: absolute;
   left: 50%;
-  top: 48%;
+  top: 50%;
   display: block;
   width: var(--card-width);
   aspect-ratio: .69;
@@ -135,7 +135,7 @@
   position: absolute;
   z-index: var(--globe-layer, 200);
   left: 50%;
-  top: 48%;
+  top: 50%;
   width: var(--globe-size, 300px);
   aspect-ratio: 1;
   transform: translate(-50%, -50%) translateZ(2px);
@@ -172,14 +172,14 @@
 @keyframes globe-turn { to { transform: rotate(360deg); } }
 
 @media (max-width: 639px) {
-  .orbit-stage { height: 435px; min-height: 435px; perspective: 1200px; }
-  .orbit-card { top: 46%; width: min(42vw, 170px); border-radius: 15px; }
-  .spectra-globe { top: 46%; }
+  .orbit-stage { height: clamp(435px, 92vw, 600px); min-height: 435px; perspective: 1200px; }
+  .orbit-card { top: 50%; width: min(42vw, 170px); border-radius: 15px; }
+  .spectra-globe { top: 50%; }
   .event-lift-face { border-radius: 15px; }
 }
 @media (prefers-reduced-motion: reduce) { .spectra-globe-mesh { animation: none; } }
 
-/* The chosen card expands to the event panel while turning through several flips. */
+/* Flip the selected card once, then expand it into the event panel. */
 .event-reveal-layer {
   position: fixed;
   inset: 0;
@@ -198,7 +198,7 @@
   z-index: 1;
   perspective: 1100px;
   transform-origin: center;
-  animation: event-card-expand 1120ms cubic-bezier(.18,.76,.2,1) both;
+  animation: event-card-expand 440ms cubic-bezier(.18,.76,.2,1) 620ms both;
   transition: opacity 240ms ease;
   will-change: transform, opacity;
 }
@@ -206,7 +206,7 @@
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  animation: event-card-spin 1120ms cubic-bezier(.18,.76,.2,1) both, event-card-opacity 260ms ease-out both;
+  animation: event-card-spin 620ms cubic-bezier(.25,.7,.2,1) both, event-card-opacity 260ms ease-out both;
   will-change: transform;
 }
 .event-lift-face {
@@ -232,7 +232,7 @@
 }
 @keyframes event-card-spin {
   from { transform: rotateY(var(--lift-start-yaw)); }
-  to { transform: rotateY(calc(var(--lift-start-yaw) + 540deg)); }
+  to { transform: rotateY(calc(var(--lift-start-yaw) + 180deg)); }
 }
 @keyframes event-card-opacity { from { opacity: var(--lift-start-opacity); } to { opacity: 1; } }
 .event-details-reveal[data-state="open"] {

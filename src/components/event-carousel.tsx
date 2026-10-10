@@ -13,9 +13,19 @@ import { cn } from "@/lib/utils";
 const INITIAL_EVENT = 2;
 const CARD_GAP = (Math.PI * 2) / events.length;
 const ORBIT_SPEED = 0.14; // radians per second; about 25% quicker than the previous carousel
-const REVEAL_DURATION_MS = 1120;
+const FLIP_DURATION_MS = 620;
+const EXPAND_DURATION_MS = 440;
 const HANDOFF_DURATION_MS = 240;
-const REVEAL_FALLBACK_MS = REVEAL_DURATION_MS + HANDOFF_DURATION_MS + 240;
+const REVEAL_FALLBACK_MS = FLIP_DURATION_MS + EXPAND_DURATION_MS + HANDOFF_DURATION_MS + 240;
+
+function orbitMetrics(width: number) {
+  const mobile = width < 640;
+  const globeRadius = Math.min(width * 0.46, 340);
+  const radius = mobile
+    ? width * 0.41
+    : Math.min(globeRadius - 8, width * 0.38);
+  return { mobile, globeRadius, radius };
+}
 
 const smoothstep = (from: number, to: number, value: number) => {
   const amount = Math.max(0, Math.min(1, (value - from) / (to - from)));
@@ -80,6 +90,25 @@ export function EventCarousel() {
   }, []);
 
   useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const handleWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaX) < 0.5 || flippingSlug || openEvent) return;
+      event.preventDefault();
+      const delta = event.deltaX * (event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? stage.clientWidth : 1);
+      const radius = Math.max(220, orbitMetrics(stage.clientWidth || 360).radius);
+      const currentDestination = destination.current ?? rotation.current;
+      // Positive horizontal scrolling moves the visible cards to the right.
+      destination.current = currentDestination - delta / radius;
+      setMotionRevision((revision) => revision + 1);
+    };
+
+    stage.addEventListener("wheel", handleWheel, { passive: false });
+    return () => stage.removeEventListener("wheel", handleWheel);
+  }, [flippingSlug, openEvent]);
+
+  useEffect(() => {
     let frame = 0;
     let lastTime = 0;
 
@@ -107,11 +136,7 @@ export function EventCarousel() {
       const stage = stageRef.current;
       if (stage) {
         const width = stage.clientWidth;
-        const mobile = width < 640;
-        const globeRadius = mobile ? width * 0.46 : Math.min(width * 0.41, 340);
-        const radius = mobile
-          ? width * 0.27
-          : Math.min(globeRadius - 8, width * 0.34);
+        const { globeRadius, radius } = orbitMetrics(width);
         const activeIndex = ((Math.round(rotation.current / CARD_GAP) + INITIAL_EVENT) % events.length + events.length) % events.length;
         if (activeIndex !== selectedIndex.current) {
           selectedIndex.current = activeIndex;
@@ -183,11 +208,7 @@ export function EventCarousel() {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       const stageWidth = stageRef.current?.clientWidth ?? viewportWidth;
-      const mobile = stageWidth < 640;
-      const globeRadius = mobile ? stageWidth * 0.46 : Math.min(stageWidth * 0.41, 340);
-      const orbitRadius = mobile
-        ? stageWidth * 0.27
-        : Math.min(globeRadius - 8, stageWidth * 0.34);
+      const { mobile, radius: orbitRadius } = orbitMetrics(stageWidth);
       const eventIndex = events.findIndex((item) => item.slug === event.slug);
       const angle = (eventIndex - INITIAL_EVENT) * CARD_GAP - rotation.current;
       const front = Math.cos(angle);
@@ -245,7 +266,7 @@ export function EventCarousel() {
     const deltaX = event.clientX - pointerStart.current.x;
     if (Math.abs(deltaX) > 6) dragged.current = true;
     const radius = Math.max(220, (stageRef.current?.clientWidth ?? 360) * 0.76);
-    rotation.current = pointerStart.current.rotation + deltaX / radius;
+    rotation.current = pointerStart.current.rotation - deltaX / radius;
     destination.current = null;
   }
 
@@ -370,14 +391,17 @@ export function EventCarousel() {
       {revealedEvent && createPortal(
           <div className="event-reveal-layer" data-handoff={handoff} role="status" aria-label={`Opening ${revealedEvent.name} details`}>
           <div className="event-reveal-scrim" />
-          <div className="event-lift" style={liftStyle}>
+          <div
+            className="event-lift"
+            style={liftStyle}
+            onAnimationEnd={(animation) => {
+              if (animation.target !== animation.currentTarget || animation.animationName !== "event-card-expand") return;
+              const event = pendingEvent.current;
+              if (event) finishFlip(event);
+            }}
+          >
             <div
               className="event-lift-spin"
-              onAnimationEnd={(animation) => {
-                if (animation.target !== animation.currentTarget || animation.animationName !== "event-card-spin") return;
-                const event = pendingEvent.current;
-                if (event) finishFlip(event);
-              }}
             >
               {[false, true].map((back) => (
                 <div key={String(back)} className={cn("event-lift-face", back && "event-lift-back")}>
@@ -390,7 +414,7 @@ export function EventCarousel() {
                     </div>
                   ) : (
                     <>
-                      <Image src={revealedEvent.cardImage} alt="" fill sizes="220px" className="object-cover" />
+                      <Image src={revealedEvent.image} alt="" fill sizes="(max-width: 640px) 84vw, 520px" className="object-cover" />
                       <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#160b16] via-[#160b16]/80 to-transparent px-4 pt-20 pb-6 text-center text-white">
                         <p className="text-[9px] tracking-[.25em] uppercase">{revealedEvent.category}</p>
                         <p className="mt-2 font-display text-xl uppercase">{revealedEvent.name}</p>
