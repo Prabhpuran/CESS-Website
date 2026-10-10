@@ -1,0 +1,245 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/space-grotesk";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #f8f2ed;
+  --foreground: #24181e;
+  --card: #fffaf6;
+  --card-foreground: #24181e;
+  --popover: #fffaf6;
+  --popover-foreground: #24181e;
+  --primary: #bd0f63;
+  --primary-foreground: #ffffff;
+  --secondary: #eee2db;
+  --secondary-foreground: #39242e;
+  --muted: #eee5e0;
+  --muted-foreground: #776570;
+  --accent: #f4d5df;
+  --accent-foreground: #8b1247;
+  --destructive: #b52e3b;
+  --border: #ddcdc7;
+  --input: #ddcdc7;
+  --ring: #c9186b;
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: "DM Sans Variable", sans-serif;
+  --font-display: "Space Grotesk Variable", sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    @apply bg-primary text-white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* The event cards travel in a 3D ring around a softly lit globe. */
+.orbit-stage {
+  position: relative;
+  height: clamp(480px, 52vw, 680px);
+  min-height: 470px;
+  overflow: hidden;
+  perspective: 2000px;
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+  touch-action: pan-y;
+  user-select: none;
+}
+.orbit-card {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  display: block;
+  width: var(--card-width);
+  aspect-ratio: .69;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  overflow: hidden;
+  border: 1px solid #ffeacb;
+  border-radius: 18px;
+  background: #25101d;
+  text-align: center;
+  color: white;
+  box-shadow: 0 14px 30px #57203a60;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.orbit-card-hidden { opacity: 0 !important; pointer-events: none; }
+.orbit-card:focus-visible { outline: 3px solid #bd0f63; outline-offset: 4px; }
+.orbit-card-face { position: absolute; inset: 0; display: block; overflow: hidden; border-radius: inherit; }
+.orbit-card-details {
+  position: absolute;
+  inset: auto 0 0;
+  display: block;
+  padding: 5rem .75rem 1rem;
+  background: linear-gradient(to top, #160b16 0%, #160b16dc 50%, transparent 100%);
+  opacity: var(--event-details-opacity, 1);
+}
+.spectra-globe {
+  position: absolute;
+  z-index: var(--globe-layer, 200);
+  left: 50%;
+  top: 48%;
+  width: var(--globe-size, 300px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) translateZ(2px);
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.spectra-globe-core {
+  position: absolute;
+  inset: 6%;
+  overflow: hidden;
+  border: 1px solid #fff0dc;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 34% 24%, #ffe5c2 0%, #ffb279 10%, #fa705f 25%, #d52d7d 48%, #760a48 73%, #291228 100%);
+  box-shadow: inset -25px -20px 45px #130b2d90, inset 9px 8px 24px #ffe8c477, 0 0 18px #fff3d9, 0 0 56px #fa4a9380;
+}
+.spectra-globe-core::before,
+.spectra-globe-core::after {
+  position: absolute;
+  inset: -14%;
+  content: "";
+  border: 1px solid #ffe7dc65;
+  border-radius: 50%;
+}
+.spectra-globe-core::before { transform: scaleX(.36); }
+.spectra-globe-core::after { transform: scaleX(.68); }
+.spectra-globe-mesh { position: absolute; inset: 0; animation: globe-turn 36s linear infinite; }
+.spectra-globe-mesh i { position: absolute; display: block; border: 1px solid #ffe9e66b; border-radius: 50%; }
+.spectra-globe-mesh i:nth-child(-n+5) { inset: 0 30%; transform: rotateY(var(--angle)); }
+.spectra-globe-mesh i:nth-child(n+6) { left: 0; right: 0; height: 25%; top: var(--top); transform: translateY(-50%); }
+.spectra-globe-shine { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(115deg, #fff5df58, transparent 36% 70%, #170d2c9c); }
+.spectra-globe-halo { position: absolute; inset: -20%; border-radius: 50%; background: radial-gradient(circle, #fa5e8e38 0 45%, transparent 72%); filter: blur(12px); transform: translateZ(-1px); }
+.spectra-globe-orbit { position: absolute; left: -36%; right: -36%; top: 42%; height: 18%; border: 1px solid #fff1d9; border-radius: 50%; box-shadow: 0 0 12px #ffb781a0; transform: rotate(-13deg); }
+.spectra-globe-orbit-two { left: -25%; right: -25%; top: 70%; height: 11%; transform: rotate(8deg); border-color: #ffbe825e; }
+@keyframes globe-turn { to { transform: rotate(360deg); } }
+
+@media (max-width: 639px) {
+  .orbit-stage { height: 435px; min-height: 435px; perspective: 1200px; }
+  .orbit-card { top: 46%; width: min(42vw, 170px); border-radius: 15px; }
+  .spectra-globe { top: 46%; }
+  .event-lift-face { border-radius: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { .spectra-globe-mesh { animation: none; } }
+
+/* The chosen card expands to the event panel while turning through several flips. */
+.event-reveal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  perspective: 1600px;
+}
+.event-reveal-scrim {
+  position: absolute;
+  inset: 0;
+  background: #160d1875;
+  animation: event-dim-in 160ms ease-out both;
+  transition: opacity 240ms ease;
+}
+.event-lift {
+  position: absolute;
+  z-index: 1;
+  perspective: 1100px;
+  transform-origin: center;
+  animation: event-card-expand 1120ms cubic-bezier(.18,.76,.2,1) both;
+  transition: opacity 240ms ease;
+  will-change: transform, opacity;
+}
+.event-lift-spin {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: event-card-spin 1120ms cubic-bezier(.18,.76,.2,1) both, event-card-opacity 260ms ease-out both;
+  will-change: transform;
+}
+.event-lift-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid #fff0cf;
+  background: #25101d;
+  backface-visibility: hidden;
+  box-shadow: 0 10px 28px #170b2060;
+}
+.event-lift-back { transform: rotateY(180deg); }
+.event-reveal-layer[data-handoff="true"] .event-reveal-scrim {
+  animation: none;
+  opacity: 0;
+}
+.event-reveal-layer[data-handoff="true"] .event-lift { opacity: 0; }
+@keyframes event-dim-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes event-card-expand {
+  from { transform: translate3d(0, 0, 0) scale(var(--lift-start-scale)); }
+  to { transform: translate3d(var(--lift-x), var(--lift-y), 0) scale(var(--lift-target-scale)); }
+}
+@keyframes event-card-spin {
+  from { transform: rotateY(var(--lift-start-yaw)); }
+  to { transform: rotateY(calc(var(--lift-start-yaw) + 540deg)); }
+}
+@keyframes event-card-opacity { from { opacity: var(--lift-start-opacity); } to { opacity: 1; } }
+.event-details-reveal[data-state="open"] {
+  animation: event-panel-enter 240ms cubic-bezier(.2,.7,.25,1) both;
+  backface-visibility: hidden;
+}
+@keyframes event-panel-enter {
+  from { opacity: 0; scale: .985; }
+  to { opacity: 1; scale: 1; }
+}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1050" fill="none"><defs>
+<linearGradient id="sky" x2="0" y2="1"><stop stop-color="#f6eae3" /><stop offset=".64" stop-color="#f3c6b0" /><stop offset="1" stop-color="#d6a997" /></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fff9d9" /><stop offset=".35" stop-color="#ffb674" stop-opacity=".8" /><stop offset="1" stop-color="#ff9374" stop-opacity="0" /></radialGradient>
+<radialGradient id="orb" cx=".36" cy=".29" r=".72"><stop stop-color="#ffc695" /><stop offset=".22" stop-color="#f25f48" /><stop offset=".53" stop-color="#d32a70" /><stop offset=".77" stop-color="#79062f" /><stop offset="1" stop-color="#2b1625" /></radialGradient>
+<linearGradient id="stone"><stop stop-color="#a68d83" /><stop offset=".2" stop-color="#e5cfc0" /><stop offset=".8" stop-color="#f7e7dc" /><stop offset="1" stop-color="#b49b8d" /></linearGradient>
+<linearGradient id="floor" x2="0" y2="1"><stop stop-color="#b38479" /><stop offset=".4" stop-color="#e5bfac" /><stop offset="1" stop-color="#ead5c9" /></linearGradient>
+<linearGradient id="reflection" x2="0" y2="1"><stop stop-color="#f7495f" stop-opacity=".65" /><stop offset="1" stop-color="#f64a71" stop-opacity="0" /></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8" /></filter>
+<filter id="haze"><feGaussianBlur stdDeviation="28" /></filter>
+</defs><path fill="url(#sky)" d="M0 0h1600v1050H0z" />
+<g opacity=".36" filter="url(#haze)" fill="#fff9ec"><ellipse cx="430" cy="220" rx="230" ry="38" /><ellipse cx="1190" cy="320" rx="250" ry="50" /><ellipse cx="890" cy="180" rx="200" ry="24" /></g>
+<path d="M0 260 90 305v535H0zm90 170 180 40v370H90zm90 80 90 20v310h-90zm1420-250-90 45v535h90zm-90 170-180 40v370h90zm-90 80-90 20v310h90z" fill="url(#stone)" />
+<path d="M0 780h250v30h1100v-30h250v110H0z" fill="#ccb0a0" /><path d="M0 828h1600v222H0z" fill="url(#floor)" />
+<path d="M630 850h340l130 200H500z" fill="url(#reflection)" />
+<g stroke="#fff1c5" opacity=".75"><path d="M0 876h1600M0 961h1600M210 1050 590 829m800 221-380-221" /></g>
+<ellipse cx="800" cy="867" rx="610" ry="44" fill="#795048" opacity=".5" /><ellipse cx="800" cy="851" rx="590" ry="40" stroke="#ffa36f" stroke-width="12" filter="url(#glow)" /><ellipse cx="800" cy="851" rx="590" ry="40" fill="#85544c" fill-opacity=".45" stroke="#fff2d6" stroke-width="3" />
+<ellipse cx="800" cy="840" rx="365" ry="29" stroke="#ffc48b" stroke-width="4" />
+</svg>
