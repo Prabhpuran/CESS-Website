@@ -19,11 +19,13 @@ export type SpectraEvent = {
   accent: string;
   format: string;
   highlights: string[];
+  registrationFee?: string;
+  registrationNotes?: string[];
   registrationUrl?: string;
 };
 
-// Programme information can be refined as the event team confirms details.
-// Add each event's Google Form URL below to show its registration action.
+// Keep event information and the official registration form together so every
+// card, detail page, and registration action uses the same source of truth.
 export const site = {
   name: "Spectra’26",
   organizer: "CESS",
@@ -72,16 +74,20 @@ export const events: SpectraEvent[] = [
     category: "Pageant",
     tagline: "Confidence. Character. Your moment.",
     description:
-      "A celebration of personality, confidence, and the way you carry yourself. Bring your point of view to a stage made for memorable presence.",
+      "Welcome to the Spectra 3.0 Fashion Show. Show off your charisma, design sense, and runway presence in front of a live audience and panel of judges.",
     image: "/images/events/mr-and-ms-spectra.svg",
     cardImage: "/images/posters/mr-and-ms-spectra.webp",
     accent: "#d6a364",
-    format: "Personality showcase",
+    format: "Fashion show and personality showcase",
     highlights: [
-      "A spotlight on confidence and individuality",
-      "Personality and stage presence",
-      "Rounds and participation details to be announced",
+      "Showcase your charisma, design sense, and runway presence",
+      "Perform in front of a live audience and panel of judges",
     ],
+    registrationFee: "₹100",
+    registrationNotes: [
+      "Complete all required fields in the form and submit your payment receipt to complete registration.",
+    ],
+    registrationUrl: "https://forms.gle/CKgrkWueSndfMiXt7",
   },
   {
     slug: "salsa-night",
@@ -89,16 +95,17 @@ export const events: SpectraEvent[] = [
     category: "Dance",
     tagline: "Meet us where rhythm takes over.",
     description:
-      "An evening of salsa, movement, and shared rhythm. Let the music lead, bring the energy to the floor, and make every step part of the celebration.",
+      "A night to remember. Dress to impress, step under the dazzling lights, and lose yourself in an evening straight out of a dream. Bring your finest western attire, your best moves, and your favorite people for a magical night of rhythm, romance, and unforgettable memories on the dance floor.",
     image: "/images/events/salsa-night.svg",
     cardImage: "/images/posters/salsa-night.webp",
     accent: "#df7550",
-    format: "Dance performance",
+    format: "Salsa night",
     highlights: [
-      "A celebration of salsa and Latin dance",
-      "Partner movement and musical connection",
-      "Participation information to be announced",
+      "An evening of rhythm, dancing, and celebration",
     ],
+    registrationFee: "₹600 per participant",
+    registrationNotes: ["Dress code: Western"],
+    registrationUrl: "https://forms.gle/QvSuxTca5ZnZmccH8",
   },
   {
     slug: "spectra-got-talent",
@@ -106,16 +113,17 @@ export const events: SpectraEvent[] = [
     category: "Performance",
     tagline: "Your stage. Your story. Your moment.",
     description:
-      "A festival stage for the performers who make people look, listen, and remember. Share your craft, bring your own energy, and make the moment yours.",
+      "Your talent. Your stage. Your moment to shine! Spectra Got Talent is the ultimate platform for showcasing raw talent, creativity, and unapologetic self-expression. Whether it’s acting, stand-up comedy, open mic, rap, poetry, mimicry, or any unique skill you’ve got, this is your chance to step into the spotlight and let your talent speak for itself. No filters, no limits—just pure talent, bold performances, and unforgettable moments. Bring your confidence, own the stage, and show everyone what you’re capable of. The spotlight is yours. Are you ready to unleash your talent?",
     image: "/images/events/spectra-got-talent.svg",
     cardImage: "/images/posters/spectra-got-talent.webp",
     accent: "#92a8d3",
-    format: "Talent showcase",
+    format: "Open talent showcase",
     highlights: [
-      "A stage for a wide range of talents",
-      "Individual performance and stage presence",
-      "Categories and guidelines to be announced",
+      "Acting, stand-up comedy, open mic, rap, poetry, mimicry, and more",
+      "Bring your confidence, own the stage, and express yourself",
     ],
+    registrationFee: "₹100",
+    registrationUrl: "https://forms.gle/BQCy9KPc5xZZN6Hq8",
   },
   {
     slug: "voice-of-spectra",
@@ -123,16 +131,17 @@ export const events: SpectraEvent[] = [
     category: "Music",
     tagline: "Every voice deserves its moment.",
     description:
-      "A vocal showcase celebrating distinctive voices and musical interpretation. Bring a song to the stage and make every note count.",
+      "Welcome to SPECTRA 3.0! Get ready to showcase your voice on stage and light up the cultural fest. Fill out the details below to register for the vocal competition. We can’t wait to see your performance!",
     image: "/images/events/voice-of-spectra.svg",
     cardImage: "/images/posters/voice-of-spectra.webp",
     accent: "#c86661",
-    format: "Vocal showcase",
+    format: "Vocal performance",
     highlights: [
-      "A platform for emerging singers",
-      "Vocal performance across musical styles",
-      "Performance categories and guidelines to be announced",
+      "Maximum performance time: 3 minutes",
+      "Reporting time and performance slots will be shared before the event",
     ],
+    registrationFee: "₹100 per entry",
+    registrationUrl: "https://forms.gle/i5EeNyQAkkEreJuB7",
   },
 ];
 

@@ -4,9 +4,11 @@ import { externalFormUrl } from "@/lib/content";
 
 export function EventRegistrationAction({
   url,
+  eventName,
   className,
 }: {
   url?: string;
+  eventName?: string;
   className?: string;
 }) {
   const destination = externalFormUrl(url);
@@ -14,9 +16,14 @@ export function EventRegistrationAction({
 
   return (
     <Button asChild className={className}>
-      <a href={destination} target="_blank" rel="noopener noreferrer">
-        Register via Google Form
-        <ArrowUpRight />
+      <a
+        href={destination}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={eventName ? `Register for ${eventName}` : "Register now"}
+      >
+        Register now
+        <ArrowUpRight aria-hidden="true" />
       </a>
     </Button>
   );

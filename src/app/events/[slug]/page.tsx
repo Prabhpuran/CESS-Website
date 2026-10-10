@@ -7,6 +7,7 @@ import {
   ArrowUpRight,
   CalendarDays,
   MapPin,
+  Ticket,
   Users,
   Check,
 } from "lucide-react";
@@ -99,11 +100,27 @@ export default async function EventDetailPage({
             </p>
             <p className="flex items-center gap-3">
               <Users className="size-4 text-primary" />
-              {event.format} · Details to be confirmed
+              {event.format}
             </p>
+            {event.registrationFee && (
+              <p className="flex items-center gap-3">
+                <Ticket className="size-4 text-primary" />
+                Registration fee: {event.registrationFee}
+              </p>
+            )}
           </div>
-          <EventRegistrationAction url={event.registrationUrl} className="w-full sm:w-auto" />
-          <h2 className="mt-9 font-display text-xl">What to look forward to</h2>
+          {event.registrationNotes?.length ? (
+            <div className="mb-7 rounded-xl border border-primary/15 bg-card px-4 py-4">
+              <h2 className="font-display text-base font-medium">Registration notes</h2>
+              <ul className="mt-2 space-y-2">
+                {event.registrationNotes.map((note) => (
+                  <li key={note} className="text-sm leading-relaxed text-muted-foreground">{note}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <EventRegistrationAction url={event.registrationUrl} eventName={event.name} className="w-full sm:w-auto" />
+          <h2 className="mt-9 font-display text-xl">Key details</h2>
           <ul className="mt-4 space-y-3">
             {event.highlights.map((item) => (
               <li
@@ -138,9 +155,8 @@ export default async function EventDetailPage({
               How do I register?
             </AccordionTrigger>
             <AccordionContent className="leading-7 text-muted-foreground">
-              Use the Google Form linked on this event page to register. Event
-              specific requirements and any applicable fees are listed in that
-              form.
+              Use the Register now button on this page to open the official
+              form. The event fee and any additional notes are shown above.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="help">

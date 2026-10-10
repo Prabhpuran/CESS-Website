@@ -60,8 +60,8 @@ export function EventBrowser() {
         </div>
       </div>
       <p className="mb-6 text-xs text-muted-foreground" role="status">
-        {filtered.length} {filtered.length === 1 ? "event" : "events"} in the
-        preview · Final programme to be announced
+        {filtered.length} {filtered.length === 1 ? "event" : "events"} · Open
+        an event card for details and available registration links
       </p>
       {filtered.length ? (
         <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">

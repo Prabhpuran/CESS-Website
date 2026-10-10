@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { RefObject } from "react";
-import { CalendarDays, Check, MapPin, Users, X } from "lucide-react";
+import { CalendarDays, Check, MapPin, Ticket, Users, X } from "lucide-react";
 import {
   DialogClose,
   Dialog,
@@ -87,11 +87,28 @@ export function EventDetailsDialog({
                 <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />{site.venue}
               </p>
               <p className="flex items-start gap-3 sm:col-span-2">
-                <Users className="mt-0.5 size-4 shrink-0 text-primary" />{event.format} · Participation details to be announced
+                <Users className="mt-0.5 size-4 shrink-0 text-primary" />{event.format}
               </p>
+              {event.registrationFee && (
+                <p className="flex items-start gap-3 sm:col-span-2">
+                  <Ticket className="mt-0.5 size-4 shrink-0 text-primary" />
+                  Registration fee: {event.registrationFee}
+                </p>
+              )}
             </div>
 
-            <h3 className="font-display text-base font-medium">What to look forward to</h3>
+            {event.registrationNotes?.length ? (
+              <div className="mb-6 rounded-xl border border-primary/15 bg-white/60 p-4">
+                <h3 className="font-display text-base font-medium">Registration notes</h3>
+                <ul className="mt-2 space-y-2">
+                  {event.registrationNotes.map((note) => (
+                    <li key={note} className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{note}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            <h3 className="font-display text-base font-medium">Key details</h3>
             <ul className="mt-3 space-y-2.5">
               {event.highlights.map((highlight) => (
                 <li key={highlight} className="flex gap-2.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">
@@ -100,7 +117,7 @@ export function EventDetailsDialog({
               ))}
             </ul>
 
-            <EventRegistrationAction url={event.registrationUrl} className="mt-7 w-full sm:w-auto" />
+            <EventRegistrationAction url={event.registrationUrl} eventName={event.name} className="mt-7 w-full sm:w-auto" />
           </div>
         </DialogContent>
       )}

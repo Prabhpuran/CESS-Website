@@ -357,6 +357,9 @@ export function EventCarousel() {
                 <span className="orbit-card-details">
                   <span className="mb-1 block text-[8px] tracking-[.23em] text-[#ffc5af] uppercase">{event.category}</span>
                   <span className="block font-display text-base font-medium tracking-[.09em] uppercase sm:text-lg">{event.name}</span>
+                  {event.registrationFee && (
+                    <span className="mt-1 block text-[8px] font-medium tracking-wide text-[#ffd2bf]">Fee · {event.registrationFee}</span>
+                  )}
                   <span className="mx-auto mt-3 flex size-9 items-center justify-center rounded-full border border-white/80 transition group-hover:bg-white group-hover:text-primary sm:size-10">
                     <ArrowUpRight className="size-5" />
                   </span>
