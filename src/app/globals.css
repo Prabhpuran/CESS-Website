@@ -179,7 +179,7 @@
 }
 @media (prefers-reduced-motion: reduce) { .spectra-globe-mesh { animation: none; } }
 
-/* Flip the selected card once, then expand it into the event panel. */
+/* Turn the selected card through two 180° flips, then expand it into the event panel. */
 .event-reveal-layer {
   position: fixed;
   inset: 0;
@@ -198,7 +198,7 @@
   z-index: 1;
   perspective: 1100px;
   transform-origin: center;
-  animation: event-card-expand 440ms cubic-bezier(.18,.76,.2,1) 620ms both;
+  animation: event-card-expand var(--lift-expand-duration, 480ms) cubic-bezier(.18,.76,.2,1) var(--lift-flip-duration, 1000ms) both;
   transition: opacity 240ms ease;
   will-change: transform, opacity;
 }
@@ -206,7 +206,8 @@
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  animation: event-card-spin 620ms cubic-bezier(.25,.7,.2,1) both, event-card-opacity 260ms ease-out both;
+  -webkit-transform-style: preserve-3d;
+  animation: event-card-spin var(--lift-flip-duration, 1000ms) cubic-bezier(.4,0,.2,1) both, event-card-opacity 260ms ease-out both;
   will-change: transform;
 }
 .event-lift-face {
@@ -217,6 +218,7 @@
   border: 1px solid #fff0cf;
   background: #25101d;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   box-shadow: 0 10px 28px #170b2060;
 }
 .event-lift-back { transform: rotateY(180deg); }
@@ -232,7 +234,7 @@
 }
 @keyframes event-card-spin {
   from { transform: rotateY(var(--lift-start-yaw)); }
-  to { transform: rotateY(calc(var(--lift-start-yaw) + 180deg)); }
+  to { transform: rotateY(calc(var(--lift-start-yaw) + 360deg)); }
 }
 @keyframes event-card-opacity { from { opacity: var(--lift-start-opacity); } to { opacity: 1; } }
 .event-details-reveal[data-state="open"] {

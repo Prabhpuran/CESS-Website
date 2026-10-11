@@ -13,8 +13,8 @@ import { cn } from "@/lib/utils";
 const INITIAL_EVENT = 2;
 const CARD_GAP = (Math.PI * 2) / events.length;
 const ORBIT_SPEED = 0.14; // radians per second; about 25% quicker than the previous carousel
-const FLIP_DURATION_MS = 620;
-const EXPAND_DURATION_MS = 440;
+const FLIP_DURATION_MS = 1000;
+const EXPAND_DURATION_MS = 480;
 const HANDOFF_DURATION_MS = 240;
 const REVEAL_FALLBACK_MS = FLIP_DURATION_MS + EXPAND_DURATION_MS + HANDOFF_DURATION_MS + 240;
 
@@ -40,7 +40,6 @@ export function EventCarousel() {
   const [openEvent, setOpenEvent] = useState<SpectraEvent | null>(null);
   const [handoff, setHandoff] = useState(false);
   const [liftStyle, setLiftStyle] = useState<CSSProperties>({});
-  const [isDragging, setIsDragging] = useState(false);
   const [motionRevision, setMotionRevision] = useState(0);
   const [pageVisible, setPageVisible] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -55,6 +54,7 @@ export function EventCarousel() {
   const flipTimer = useRef<number | null>(null);
   const handoffTimer = useRef<number | null>(null);
   const dialogTrigger = useRef<HTMLButtonElement | null>(null);
+  const stageStyle = useRef({ globeSize: "", globeLayer: "" });
 
   const goTo = useCallback((index: number) => {
     const currentIndex = Math.round(rotation.current / CARD_GAP);
@@ -98,10 +98,11 @@ export function EventCarousel() {
       event.preventDefault();
       const delta = event.deltaX * (event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? stage.clientWidth : 1);
       const radius = Math.max(220, orbitMetrics(stage.clientWidth || 360).radius);
+      const wasIdle = destination.current === null;
       const currentDestination = destination.current ?? rotation.current;
       // Positive horizontal scrolling moves the visible cards to the right.
       destination.current = currentDestination - delta / radius;
-      setMotionRevision((revision) => revision + 1);
+      if (wasIdle) setMotionRevision((revision) => revision + 1);
     };
 
     stage.addEventListener("wheel", handleWheel, { passive: false });
@@ -154,13 +155,27 @@ export function EventCarousel() {
           const scale = 0.82 + Math.max(0, front) * 0.18;
           const yaw = Math.atan2(Math.sin(angle), Math.cos(angle));
           card.style.transform = `translate3d(calc(-50% + ${x}px), -50%, ${depth}px) rotateY(${yaw}rad) scale(${scale})`;
-          card.style.opacity = flippingSlug === events[index].slug ? "0" : `${shellVisibility}`;
-          card.style.zIndex = `${Math.round(depth + radius + 1)}`;
-          card.style.setProperty("--event-details-opacity", `${detailVisibility}`);
-          card.style.pointerEvents = shellVisibility > 0.25 && flippingSlug !== events[index].slug ? "auto" : "none";
+          const opacity = flippingSlug === events[index].slug ? "0" : `${shellVisibility}`;
+          if (card.style.opacity !== opacity) card.style.opacity = opacity;
+          const zIndex = `${Math.round(depth + radius + 1)}`;
+          if (card.style.zIndex !== zIndex) card.style.zIndex = zIndex;
+          const detailsOpacity = `${detailVisibility}`;
+          if (card.style.getPropertyValue("--event-details-opacity") !== detailsOpacity) {
+            card.style.setProperty("--event-details-opacity", detailsOpacity);
+          }
+          const pointerEvents = shellVisibility > 0.25 && flippingSlug !== events[index].slug ? "auto" : "none";
+          if (card.style.pointerEvents !== pointerEvents) card.style.pointerEvents = pointerEvents;
         });
-        stage.style.setProperty("--globe-size", `${globeRadius * 2}px`);
-        stage.style.setProperty("--globe-layer", `${Math.round(radius + 2)}`);
+        const globeSize = `${globeRadius * 2}px`;
+        const globeLayer = `${Math.round(radius + 2)}`;
+        if (stageStyle.current.globeSize !== globeSize) {
+          stage.style.setProperty("--globe-size", globeSize);
+          stageStyle.current.globeSize = globeSize;
+        }
+        if (stageStyle.current.globeLayer !== globeLayer) {
+          stage.style.setProperty("--globe-layer", globeLayer);
+          stageStyle.current.globeLayer = globeLayer;
+        }
       }
       const shouldAnimate =
         (!focused && !reducedMotion && pageVisible && !flippingSlug && !openEvent) ||
@@ -171,7 +186,7 @@ export function EventCarousel() {
 
     frame = requestAnimationFrame(renderOrbit);
     return () => cancelAnimationFrame(frame);
-  }, [focused, flippingSlug, isDragging, motionRevision, openEvent, pageVisible, reducedMotion]);
+  }, [focused, flippingSlug, motionRevision, openEvent, pageVisible, reducedMotion]);
 
   useEffect(() => () => {
     if (flipTimer.current !== null) window.clearTimeout(flipTimer.current);
@@ -239,6 +254,8 @@ export function EventCarousel() {
         "--lift-target-scale": targetScale,
         "--lift-start-yaw": `${yaw}rad`,
         "--lift-start-opacity": smoothstep(-0.08, 0.5, front),
+        "--lift-flip-duration": `${FLIP_DURATION_MS}ms`,
+        "--lift-expand-duration": `${EXPAND_DURATION_MS}ms`,
       } as CSSProperties);
     }
     destination.current = null;
@@ -254,7 +271,7 @@ export function EventCarousel() {
   function startDrag(event: PointerEvent<HTMLDivElement>) {
     if (!stageRef.current?.contains(event.target as Node)) return;
     dragging.current = true;
-    setIsDragging(true);
+    setMotionRevision((revision) => revision + 1);
     dragged.current = false;
     pointerStart.current = { x: event.clientX, rotation: rotation.current };
     const captureTarget = event.target instanceof HTMLElement ? event.target : stageRef.current;
@@ -273,7 +290,6 @@ export function EventCarousel() {
   function endDrag() {
     if (!dragging.current) return;
     dragging.current = false;
-    setIsDragging(false);
   }
 
   useEffect(() => {
