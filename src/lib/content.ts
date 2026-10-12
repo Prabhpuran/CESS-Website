@@ -1,12 +1,9 @@
-export const eventCategories = [
-  "Dance",
-  "Technology",
-  "Pageant",
-  "Performance",
-  "Music",
-] as const;
-
-export type EventCategory = (typeof eventCategories)[number];
+export type EventCategory =
+  | "Dance"
+  | "Technology"
+  | "Pageant"
+  | "Performance"
+  | "Music";
 
 export type SpectraEvent = {
   slug: string;
@@ -26,7 +23,7 @@ export type SpectraEvent = {
   registrationUrl?: string;
 };
 
-// Keep event information and the official registration form together so every
+// Keep event information and the official registration link together so every
 // card, detail page, and registration action uses the same source of truth.
 export const site = {
   name: "Spectra’26",
@@ -34,6 +31,17 @@ export const site = {
   date: "28–29 October 2026",
   venue: "Maharaja Ranjit Singh Bhawan, Guru Nanak Dev University, Amritsar",
 };
+
+export const programSchedule = [
+  {
+    date: "28 October 2026",
+    events: ["Voice of Spectra", "Dance Arena", "Spectra Got Latent", "Salsa Night"],
+  },
+  {
+    date: "29 October 2026",
+    events: ["Mr. & Ms. Spectra", "Music Band", "Prize Distribution", "DJ"],
+  },
+] as const;
 
 export const events: SpectraEvent[] = [
   {
@@ -43,6 +51,7 @@ export const events: SpectraEvent[] = [
     tagline: "Bring the movement. Own the moment.",
     description:
       "Welcome to SPECTRA 3.0! Get ready to showcase your moves on stage and light up the cultural fest. Fill out the details below to complete your registration for the dance competition.",
+    date: "28 October 2026",
     image: "/images/events/dance-arena.svg",
     cardImage: "/images/posters/dance-arena.webp",
     accent: "#d69474",
@@ -51,7 +60,7 @@ export const events: SpectraEvent[] = [
       "Maximum time: 3 minutes per performance",
       "Showcase your moves on the Spectra stage",
     ],
-    registrationFee: "₹100 per entry",
+    registrationFee: "₹70 per entry",
     registrationNotes: [
       "Audio tracks will be collected from participants later.",
       "Reporting time and slot schedules will be shared before the event.",
@@ -65,6 +74,7 @@ export const events: SpectraEvent[] = [
     tagline: "Think. Code. Innovate. Conquer.",
     description:
       "HackerWrath 3.0 is a 24-hour hackathon organised by the Computer Engineering Students Society (CESS), Department of Computer Engineering and Technology, Guru Nanak Dev University, Amritsar. Bringing together passionate developers, creative thinkers, and tech enthusiasts, HackerWrath challenges participants to innovate, collaborate, and transform ideas into impactful solutions. With a prize pool of ₹60,000+, get ready to push your limits, solve real-world problems, and experience the thrill of competitive coding.",
+    registrationFee: "₹350",
     date: "22–23 October 2026",
     venue: "Guru Nanak Dev University, Amritsar",
     image: "/images/events/hackerwrath-3.svg",
@@ -86,6 +96,7 @@ export const events: SpectraEvent[] = [
     tagline: "Confidence. Character. Your moment.",
     description:
       "Welcome to the Spectra 3.0 Fashion Show. Show off your charisma, design sense, and runway presence in front of a live audience and panel of judges.",
+    date: "29 October 2026",
     image: "/images/events/mr-and-ms-spectra.svg",
     cardImage: "/images/posters/mr-and-ms-spectra.webp",
     accent: "#d6a364",
@@ -96,6 +107,7 @@ export const events: SpectraEvent[] = [
     ],
     registrationFee: "₹100",
     registrationNotes: [
+      "Dress provided.",
       "Complete all required fields in the form and submit your payment receipt to complete registration.",
     ],
     registrationUrl: "https://forms.gle/CKgrkWueSndfMiXt7",
@@ -107,6 +119,7 @@ export const events: SpectraEvent[] = [
     tagline: "Meet us where rhythm takes over.",
     description:
       "A night to remember. Dress to impress, step under the dazzling lights, and lose yourself in an evening straight out of a dream. Bring your finest western attire, your best moves, and your favorite people for a magical night of rhythm, romance, and unforgettable memories on the dance floor.",
+    date: "28 October 2026",
     image: "/images/events/salsa-night.svg",
     cardImage: "/images/posters/salsa-night.webp",
     accent: "#df7550",
@@ -114,26 +127,28 @@ export const events: SpectraEvent[] = [
     highlights: [
       "An evening of rhythm, dancing, and celebration",
     ],
-    registrationFee: "₹600 per participant",
+    registrationFee: "₹150 per participant",
     registrationNotes: ["Dress code: Western"],
-    registrationUrl: "https://forms.gle/QvSuxTca5ZnZmccH8",
+    registrationUrl:
+      "upi://pay?pa=joshilavanya11@oksbi&pn=Lavanya%20Joshi&am=150&cu=INR&aid=uGICAgKCF1o7tFQ",
   },
   {
-    slug: "spectra-got-talent",
-    name: "Spectra Got Talent",
+    slug: "spectra-got-latent",
+    name: "Spectra Got Latent",
     category: "Performance",
     tagline: "Your stage. Your story. Your moment.",
     description:
-      "Your talent. Your stage. Your moment to shine! Spectra Got Talent is the ultimate platform for showcasing raw talent, creativity, and unapologetic self-expression. Whether it’s acting, stand-up comedy, open mic, rap, poetry, mimicry, or any unique skill you’ve got, this is your chance to step into the spotlight and let your talent speak for itself. No filters, no limits—just pure talent, bold performances, and unforgettable moments. Bring your confidence, own the stage, and show everyone what you’re capable of. The spotlight is yours. Are you ready to unleash your talent?",
-    image: "/images/events/spectra-got-talent.svg",
-    cardImage: "/images/posters/spectra-got-talent.webp",
+      "Your talent. Your stage. Your moment to shine! Spectra Got Latent is the ultimate platform for showcasing raw talent, creativity, and unapologetic self-expression. Whether it’s acting, stand-up comedy, open mic, rap, poetry, mimicry, or any unique skill you’ve got, this is your chance to step into the spotlight and let your talent speak for itself. No filters, no limits—just pure talent, bold performances, and unforgettable moments. Bring your confidence, own the stage, and show everyone what you’re capable of. The spotlight is yours. Are you ready to unleash your talent?",
+    date: "28 October 2026",
+    image: "/images/events/spectra-got-latent.svg",
+    cardImage: "/images/posters/spectra-got-latent.webp",
     accent: "#92a8d3",
     format: "Open talent showcase",
     highlights: [
       "Acting, stand-up comedy, open mic, rap, poetry, mimicry, and more",
       "Bring your confidence, own the stage, and express yourself",
     ],
-    registrationFee: "₹100",
+    registrationFee: "₹70",
     registrationUrl: "https://forms.gle/BQCy9KPc5xZZN6Hq8",
   },
   {
@@ -143,6 +158,7 @@ export const events: SpectraEvent[] = [
     tagline: "Every voice deserves its moment.",
     description:
       "Welcome to SPECTRA 3.0! Get ready to showcase your voice on stage and light up the cultural fest. Fill out the details below to register for the vocal competition. We can’t wait to see your performance!",
+    date: "28 October 2026",
     image: "/images/events/voice-of-spectra.svg",
     cardImage: "/images/posters/voice-of-spectra.webp",
     accent: "#c86661",
@@ -151,7 +167,7 @@ export const events: SpectraEvent[] = [
       "Maximum performance time: 3 minutes",
       "Reporting time and performance slots will be shared before the event",
     ],
-    registrationFee: "₹100 per entry",
+    registrationFee: "₹70 per entry",
     registrationUrl: "https://forms.gle/i5EeNyQAkkEreJuB7",
   },
 ];
@@ -160,7 +176,9 @@ export function externalFormUrl(value?: string) {
   if (!value) return undefined;
   try {
     const url = new URL(value);
-    return url.protocol === "https:" ? url.href : undefined;
+    return url.protocol === "https:" || url.protocol === "upi:"
+      ? url.href
+      : undefined;
   } catch {
     return undefined;
   }

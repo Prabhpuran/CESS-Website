@@ -34,7 +34,6 @@ const smoothstep = (from: number, to: number, value: number) => {
 export function EventCarousel() {
   const [selected, setSelected] = useState(INITIAL_EVENT);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [focused, setFocused] = useState(false);
   const [flippingSlug, setFlippingSlug] = useState<string | null>(null);
   const [openEvent, setOpenEvent] = useState<SpectraEvent | null>(null);
   const [handoff, setHandoff] = useState(false);
@@ -48,7 +47,7 @@ export function EventCarousel() {
   const destination = useRef<number | null>(null);
   const dragging = useRef(false);
   const dragged = useRef(false);
-  const pointerStart = useRef({ x: 0, rotation: 0 });
+  const pointerStart = useRef({ x: 0 });
   const pendingEvent = useRef<SpectraEvent | null>(null);
   const flipTimer = useRef<number | null>(null);
   const handoffTimer = useRef<number | null>(null);
@@ -105,20 +104,18 @@ export function EventCarousel() {
     const renderOrbit = (time: number) => {
       const elapsed = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
       lastTime = time;
-      if (flippingSlug || openEvent) {
-        destination.current = null;
-      } else if (!dragging.current && destination.current !== null && reducedMotion) {
-        rotation.current = destination.current;
-        destination.current = null;
-      } else if (!dragging.current && !reducedMotion && !document.hidden) {
-        if (destination.current !== null) {
+      if (!document.hidden) {
+        if (!dragging.current && destination.current !== null && reducedMotion) {
+          rotation.current = destination.current;
+          destination.current = null;
+        } else if (!dragging.current && destination.current !== null) {
           const delta = destination.current - rotation.current;
           rotation.current += delta * (1 - Math.exp(-elapsed * 5.5));
           if (Math.abs(delta) < 0.002) {
             rotation.current = destination.current;
             destination.current = null;
           }
-        } else if (!focused && pageVisible) {
+        } else {
           rotation.current += ORBIT_SPEED * elapsed;
         }
       }
@@ -166,16 +163,13 @@ export function EventCarousel() {
           stageStyle.current.globeLayer = globeLayer;
         }
       }
-      const shouldAnimate =
-        (!focused && !reducedMotion && pageVisible && !flippingSlug && !openEvent) ||
-        dragging.current ||
-        (!reducedMotion && destination.current !== null);
+      const shouldAnimate = pageVisible;
       if (shouldAnimate) frame = requestAnimationFrame(renderOrbit);
     };
 
     frame = requestAnimationFrame(renderOrbit);
     return () => cancelAnimationFrame(frame);
-  }, [focused, flippingSlug, motionRevision, openEvent, pageVisible, reducedMotion]);
+  }, [flippingSlug, motionRevision, openEvent, pageVisible, reducedMotion]);
 
   useEffect(() => () => {
     if (flipTimer.current !== null) window.clearTimeout(flipTimer.current);
@@ -262,7 +256,8 @@ export function EventCarousel() {
     dragging.current = true;
     setMotionRevision((revision) => revision + 1);
     dragged.current = false;
-    pointerStart.current = { x: event.clientX, rotation: rotation.current };
+    pointerStart.current = { x: event.clientX };
+    destination.current = null;
     const captureTarget = event.target instanceof HTMLElement ? event.target : stageRef.current;
     captureTarget?.setPointerCapture(event.pointerId);
   }
@@ -272,8 +267,8 @@ export function EventCarousel() {
     const deltaX = event.clientX - pointerStart.current.x;
     if (Math.abs(deltaX) > 6) dragged.current = true;
     const radius = Math.max(220, (stageRef.current?.clientWidth ?? 360) * 0.76);
-    rotation.current = pointerStart.current.rotation - deltaX / radius;
-    destination.current = null;
+    rotation.current -= deltaX / radius;
+    pointerStart.current.x = event.clientX;
   }
 
   function endDrag() {
@@ -319,12 +314,6 @@ export function EventCarousel() {
       onPointerMove={moveDrag}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      onFocusCapture={(event) => {
-        if ((event.target as HTMLElement).matches(":focus-visible")) setFocused(true);
-      }}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
-      }}
     >
       <div ref={stageRef} className="orbit-stage">
         <SpectraGlobe />

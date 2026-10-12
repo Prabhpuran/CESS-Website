@@ -99,7 +99,7 @@ export default function ContactPage() {
               },
               {
                 q: "Is registration open?",
-                a: "Open an event card to review its details. For events with an active registration form, use the Register now button to open the official form.",
+                a: "Open an event card to review its details. For events with an active registration link, use the Register now button to open it.",
               },
               {
                 q: "Can I collaborate or volunteer?",

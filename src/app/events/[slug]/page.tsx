@@ -145,7 +145,7 @@ export default async function EventDetailPage({
               Who can participate?
             </AccordionTrigger>
             <AccordionContent className="leading-7 text-muted-foreground">
-              Check the official registration form for event-specific
+              Check the official registration link for event-specific
               eligibility, team sizes, and participation requirements.
             </AccordionContent>
           </AccordionItem>
@@ -156,7 +156,7 @@ export default async function EventDetailPage({
               </AccordionTrigger>
               <AccordionContent className="leading-7 text-muted-foreground">
                 Use the Register now button on this page to open the official
-                form. The event fee and any additional notes are shown above.
+                registration link. The fee and any additional notes are shown above.
               </AccordionContent>
             </AccordionItem>
           ) : null}

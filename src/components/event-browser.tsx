@@ -4,41 +4,19 @@ import { useState } from "react";
 import { Search, X } from "lucide-react";
 import { EventCard } from "@/components/event-card";
 import { Button } from "@/components/ui/button";
-import { eventCategories, events, type EventCategory } from "@/lib/content";
+import { events } from "@/lib/content";
 
 export function EventBrowser() {
-  const [category, setCategory] = useState<EventCategory | "All events">(
-    "All events",
-  );
   const [search, setSearch] = useState("");
   const filtered = events.filter(
-    (event) =>
-      (category === "All events" || event.category === category) &&
-      `${event.name} ${event.tagline} ${event.category}`
-        .toLowerCase()
-        .includes(search.trim().toLowerCase()),
+    (event) => `${event.name} ${event.tagline} ${event.category}`
+      .toLowerCase()
+      .includes(search.trim().toLowerCase()),
   );
   return (
     <div className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 lg:px-12">
-      <div className="mb-8 flex flex-col justify-between gap-5 border-y py-5 lg:flex-row lg:items-center">
-        <div
-          role="group"
-          aria-label="Filter events by category"
-          className="flex flex-wrap gap-2"
-        >
-          {(["All events", ...eventCategories] as const).map((item) => (
-            <Button
-              key={item}
-              variant={category === item ? "default" : "ghost"}
-              aria-pressed={category === item}
-              onClick={() => setCategory(item)}
-              className="h-11 rounded-full px-3 text-xs sm:px-4"
-            >
-              {item}
-            </Button>
-          ))}
-        </div>
-        <div className="flex h-11 items-center gap-3 rounded-full border bg-card px-4 lg:w-72">
+      <div className="mb-8 border-y py-5">
+        <div className="flex h-11 items-center gap-3 rounded-full border bg-card px-4 sm:max-w-md sm:px-5">
           <Search className="size-4 shrink-0 text-muted-foreground" />
           <input
             type="search"
@@ -73,14 +51,13 @@ export function EventBrowser() {
         <div className="rounded-2xl border border-dashed px-6 py-20 text-center">
           <h2 className="font-display text-2xl">No events found.</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Try a different search or explore another category.
+            Try a different search term.
           </p>
           <Button
             variant="outline"
             className="mt-6 rounded-full"
             onClick={() => {
               setSearch("");
-              setCategory("All events");
             }}
           >
             Show all events

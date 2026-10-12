@@ -13,13 +13,14 @@ export function EventRegistrationAction({
 }) {
   const destination = externalFormUrl(url);
   if (!destination) return null;
+  const isUpiPayment = destination.startsWith("upi:");
 
   return (
     <Button asChild className={className}>
       <a
         href={destination}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={isUpiPayment ? undefined : "_blank"}
+        rel={isUpiPayment ? undefined : "noopener noreferrer"}
         aria-label={eventName ? `Register for ${eventName}` : "Register now"}
       >
         Register now
