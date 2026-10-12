@@ -15,8 +15,9 @@ export default function EventsPage() {
         accent="Find your stage."
       >
         <p>
-          Dance, build, take the stage, or find your voice. Explore the first
-          Spectra’26 event lineup and open a card for details.
+          Dance, build, take the stage, or find your voice. Explore the
+          Spectra’26 events, review their details, and register through the
+          official forms.
         </p>
       </PageIntro>
       <div className="mx-auto mb-8 grid max-w-7xl gap-4 px-5 sm:grid-cols-2 sm:px-8 lg:px-12">

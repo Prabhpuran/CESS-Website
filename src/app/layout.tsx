@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s | Spectra’26",
   },
   description:
-    "A festival of ideas, people, and culture by CESS. Explore the Spectra’26 event preview and discover what’s coming next.",
+    "Join CESS for Spectra’26 on 28–29 October 2026 at Maharaja Ranjit Singh Bhawan, Guru Nanak Dev University, Amritsar.",
   icons: { icon: "/images/cess-logo.svg" },
 };
 

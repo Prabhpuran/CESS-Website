@@ -57,10 +57,9 @@ export default function AboutPage() {
               into the same space.
             </p>
             <p>
-              Presented by CESS, the festival is a place to explore your
-              interests, meet new people, and make something memorable. Our
-              official story, team, and programme will be shared as the event
-              takes shape.
+              Presented by CESS at Guru Nanak Dev University, Spectra’26 brings
+              together performances, competitions, and creative experiences on
+              28–29 October 2026 at Maharaja Ranjit Singh Bhawan, Amritsar.
             </p>
           </div>
         </div>

@@ -61,7 +61,7 @@ export function Footer() {
         </div>
         <div className="flex flex-col gap-3 border-t border-foreground/10 pt-6 text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
           <p>© 2026 CESS. Made for the moments that matter.</p>
-          <p>Spectra’26 preview · Programme subject to announcement</p>
+          <p>Spectra’26 · 28–29 October 2026</p>
         </div>
       </div>
     </footer>

@@ -99,11 +99,7 @@ export default function ContactPage() {
               },
               {
                 q: "Is registration open?",
-                a: "Registration forms are available for Mr. & Ms. Spectra, Salsa Night, Spectra Got Talent, and Voice of Spectra. Open an event card to review its details and use the Register now button.",
-              },
-              {
-                q: "Is the event lineup final?",
-                a: "The website shows the current event lineup and available registration details. Check each event page for its latest information; remaining schedules and participation requirements will be added as CESS confirms them.",
+                a: "Open an event card to review its details. For events with an active registration form, use the Register now button to open the official form.",
               },
               {
                 q: "Can I collaborate or volunteer?",
@@ -124,7 +120,7 @@ export default function ContactPage() {
             href="/events"
             className="mt-8 inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-primary"
           >
-            Explore the programme preview
+            Explore events
             <ArrowUpRight className="size-4" />
           </Link>
         </section>

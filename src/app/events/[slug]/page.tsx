@@ -79,7 +79,7 @@ export default async function EventDetailPage({
             </span>
         </div>
         <div className="py-2 lg:py-5">
-          <Eyebrow>{event.category} · Programme preview</Eyebrow>
+          <Eyebrow>{event.category} · Spectra’26</Eyebrow>
           <h1 className="mt-5 font-display text-5xl leading-[1.05] tracking-[-.05em] sm:text-6xl">
             {event.name}
           </h1>
@@ -92,11 +92,11 @@ export default async function EventDetailPage({
           <div className="my-8 grid gap-4 border-y py-6 text-sm">
             <p className="flex items-center gap-3">
               <CalendarDays className="size-4 text-primary" />
-              {site.date}
+              {event.date ?? site.date}
             </p>
             <p className="flex items-center gap-3">
               <MapPin className="size-4 text-primary" />
-              {site.venue}
+              {event.venue ?? site.venue}
             </p>
             <p className="flex items-center gap-3">
               <Users className="size-4 text-primary" />
@@ -145,20 +145,21 @@ export default async function EventDetailPage({
               Who can participate?
             </AccordionTrigger>
             <AccordionContent className="leading-7 text-muted-foreground">
-              Eligibility, team sizes, and participation requirements will be
-              shared in the official event guidelines. This page currently
-              presents a preview of the programme.
+              Check the official registration form for event-specific
+              eligibility, team sizes, and participation requirements.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="registration">
-            <AccordionTrigger className="py-5 text-base">
-              How do I register?
-            </AccordionTrigger>
-            <AccordionContent className="leading-7 text-muted-foreground">
-              Use the Register now button on this page to open the official
-              form. The event fee and any additional notes are shown above.
-            </AccordionContent>
-          </AccordionItem>
+          {event.registrationUrl ? (
+            <AccordionItem value="registration">
+              <AccordionTrigger className="py-5 text-base">
+                How do I register?
+              </AccordionTrigger>
+              <AccordionContent className="leading-7 text-muted-foreground">
+                Use the Register now button on this page to open the official
+                form. The event fee and any additional notes are shown above.
+              </AccordionContent>
+            </AccordionItem>
+          ) : null}
           <AccordionItem value="help">
             <AccordionTrigger className="py-5 text-base">
               Where can I ask a question?

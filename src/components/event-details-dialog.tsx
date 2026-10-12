@@ -81,10 +81,10 @@ export function EventDetailsDialog({
 
             <div className="my-6 grid gap-3 border-y py-5 text-xs sm:grid-cols-2 sm:text-sm">
               <p className="flex items-start gap-3">
-                <CalendarDays className="mt-0.5 size-4 shrink-0 text-primary" />{site.date}
+                <CalendarDays className="mt-0.5 size-4 shrink-0 text-primary" />{event.date ?? site.date}
               </p>
               <p className="flex items-start gap-3">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />{site.venue}
+                <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />{event.venue ?? site.venue}
               </p>
               <p className="flex items-start gap-3 sm:col-span-2">
                 <Users className="mt-0.5 size-4 shrink-0 text-primary" />{event.format}

@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { createPortal } from "react-dom";
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { EventDetailsDialog } from "@/components/event-details-dialog";
 import { SpectraGlobe } from "@/components/spectra-globe";
-import { Button } from "@/components/ui/button";
 import { events, type SpectraEvent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -55,16 +54,6 @@ export function EventCarousel() {
   const handoffTimer = useRef<number | null>(null);
   const dialogTrigger = useRef<HTMLButtonElement | null>(null);
   const stageStyle = useRef({ globeSize: "", globeLayer: "" });
-
-  const goTo = useCallback((index: number) => {
-    const currentIndex = Math.round(rotation.current / CARD_GAP);
-    const nextIndex = ((index - INITIAL_EVENT) % events.length + events.length) % events.length;
-    let stepDelta = nextIndex - (currentIndex % events.length + events.length) % events.length;
-    if (stepDelta > events.length / 2) stepDelta -= events.length;
-    if (stepDelta < -events.length / 2) stepDelta += events.length;
-    destination.current = rotation.current + stepDelta * CARD_GAP;
-    setMotionRevision((revision) => revision + 1);
-  }, []);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -386,25 +375,6 @@ export function EventCarousel() {
         })}
       </div>
 
-      <div className="mx-auto flex max-w-[360px] items-center justify-between px-6 sm:mt-3 lg:max-w-none lg:px-12">
-        <Button variant="outline" size="icon" aria-label="Previous event" onClick={() => goTo((selected - 1 + events.length) % events.length)} className="size-11 rounded-full border-foreground/30 bg-background/25 backdrop-blur-sm hover:bg-background/70 lg:absolute lg:top-1/2 lg:left-4 lg:-translate-y-1/2 xl:left-12">
-          <ArrowLeft className="size-5" />
-        </Button>
-        <div className="flex items-center gap-2 text-sm sm:gap-4 lg:mx-auto">
-          <span className="font-medium text-primary">{String(selected + 1).padStart(2, "0")}</span>
-          <div className="flex gap-1" aria-label="Choose a featured event">
-            {events.map((event, index) => (
-              <button key={event.slug} type="button" aria-label={`Show ${event.name}`} aria-current={index === selected ? "true" : undefined} onClick={() => goTo(index)} className="flex h-11 w-3 items-center justify-center sm:w-4">
-                <span className={cn("h-0.5 w-full rounded-full transition-colors", index === selected ? "bg-primary shadow-[0_0_6px_#f71583]" : "bg-foreground/25")} />
-              </button>
-            ))}
-          </div>
-          <span className="text-foreground/70">{String(events.length).padStart(2, "0")}</span>
-        </div>
-        <Button variant="outline" size="icon" aria-label="Next event" onClick={() => goTo((selected + 1) % events.length)} className="size-11 rounded-full border-foreground/30 bg-background/25 backdrop-blur-sm hover:bg-background/70 lg:absolute lg:top-1/2 lg:right-4 lg:-translate-y-1/2 xl:right-12">
-          <ArrowRight className="size-5" />
-        </Button>
-      </div>
       <p aria-live="off" aria-atomic="true" className="sr-only">Featured event: {events[selected].name}</p>
 
       {revealedEvent && createPortal(

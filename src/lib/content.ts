@@ -14,6 +14,8 @@ export type SpectraEvent = {
   category: EventCategory;
   tagline: string;
   description: string;
+  date?: string;
+  venue?: string;
   image: string;
   cardImage: string;
   accent: string;
@@ -40,33 +42,42 @@ export const events: SpectraEvent[] = [
     category: "Dance",
     tagline: "Bring the movement. Own the moment.",
     description:
-      "A dynamic dance competition where movement, style, and stage presence take focus. Bring a routine that turns rhythm into a story and makes the stage your own.",
+      "Welcome to SPECTRA 3.0! Get ready to showcase your moves on stage and light up the cultural fest. Fill out the details below to complete your registration for the dance competition.",
     image: "/images/events/dance-arena.svg",
     cardImage: "/images/posters/dance-arena.webp",
     accent: "#d69474",
     format: "Dance competition",
     highlights: [
-      "A stage for dance styles and creative expression",
-      "Movement, coordination, and performance",
-      "Competition details to be announced",
+      "Maximum time: 3 minutes per performance",
+      "Showcase your moves on the Spectra stage",
     ],
+    registrationFee: "₹100 per entry",
+    registrationNotes: [
+      "Audio tracks will be collected from participants later.",
+      "Reporting time and slot schedules will be shared before the event.",
+    ],
+    registrationUrl: "https://forms.gle/t2n7Hethe25oM4Pg9",
   },
   {
     slug: "hackerwrath-3",
     name: "HackerWrath 3.0",
     category: "Technology",
-    tagline: "Think sharper. Build beyond.",
+    tagline: "Think. Code. Innovate. Conquer.",
     description:
-      "A team coding challenge for curious builders. Work through a technical problem, test your ideas, and turn a clear line of thinking into a working solution.",
+      "HackerWrath 3.0 is a 24-hour hackathon organised by the Computer Engineering Students Society (CESS), Department of Computer Engineering and Technology, Guru Nanak Dev University, Amritsar. Bringing together passionate developers, creative thinkers, and tech enthusiasts, HackerWrath challenges participants to innovate, collaborate, and transform ideas into impactful solutions. With a prize pool of ₹60,000+, get ready to push your limits, solve real-world problems, and experience the thrill of competitive coding.",
+    date: "22–23 October 2026",
+    venue: "Guru Nanak Dev University, Amritsar",
     image: "/images/events/hackerwrath-3.svg",
     cardImage: "/images/posters/hackerwrath-3.webp",
     accent: "#54b4a8",
-    format: "Team technology challenge",
+    format: "24-hour hackathon",
     highlights: [
-      "Problem solving and collaborative building",
-      "A challenge for curious, hands-on thinkers",
-      "Challenge details and team information to be announced",
+      "Prize pool: ₹60,000+",
+      "Innovate, collaborate, and build impactful solutions",
+      "Organised by CESS, Department of Computer Engineering and Technology",
     ],
+    registrationUrl:
+      "https://unstop.com/p/hackerwrath-30-guru-nanak-dev-university-amritsar1764531lb=useMitLb&utm_medium=Share&utm_source=cesscom36699&utm_campaign=Online_coding_challenge",
   },
   {
     slug: "mr-and-ms-spectra",
