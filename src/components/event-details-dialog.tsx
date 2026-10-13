@@ -32,7 +32,7 @@ export function EventDetailsDialog({
             e.preventDefault();
             triggerRef.current?.focus();
           }}
-          className="event-details-reveal max-h-[92svh] w-[calc(100%-1rem)] max-w-5xl gap-0 overflow-y-auto rounded-3xl border-[#fff0de] bg-[#fbf5f0] p-0 shadow-[0_30px_100px_#170b20a6] sm:max-w-5xl sm:w-[calc(100%-3rem)] md:grid md:grid-cols-[.8fr_1.2fr] md:overflow-hidden"
+          className="event-details-reveal flex max-h-[calc(100dvh-1rem)] w-[calc(100%-1rem)] max-w-5xl flex-col gap-0 overflow-hidden rounded-3xl border-[#fff0de] bg-[#fbf5f0] p-0 shadow-[0_30px_100px_#170b20a6] sm:max-w-5xl sm:w-[calc(100%-3rem)] md:grid md:max-h-[92svh] md:grid-cols-[.8fr_1.2fr] md:overflow-hidden"
         >
           <DialogClose
             aria-label="Close event details"
@@ -41,7 +41,7 @@ export function EventDetailsDialog({
             <X className="size-5" />
             <span className="sr-only">Close event details</span>
           </DialogClose>
-          <div className="relative aspect-[1.15] overflow-hidden bg-[#241420] md:aspect-auto md:min-h-[570px]">
+          <div className="relative aspect-[1.15] shrink-0 overflow-hidden bg-[#241420] md:aspect-auto md:min-h-[570px]">
             <Image
               src={event.image}
               alt={`${event.name} event artwork`}
@@ -59,7 +59,7 @@ export function EventDetailsDialog({
               </p>
             </div>
           </div>
-          <div className="p-5 sm:p-8 md:max-h-[88svh] md:overflow-y-auto md:p-9 lg:p-11">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain touch-pan-y p-5 sm:p-8 md:max-h-[88svh] md:flex-none md:overflow-y-auto md:p-9 lg:p-11">
             <DialogHeader className="pr-10 text-left">
               <p className="text-[9px] font-semibold tracking-[.25em] text-primary uppercase">
                 Step into your world
