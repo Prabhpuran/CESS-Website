@@ -41,20 +41,13 @@ export function EventDetailsDialog({
             <X className="size-5" />
             <span className="sr-only">Close event details</span>
           </DialogClose>
-          <div className="relative aspect-[1.34] overflow-hidden bg-[#241420] md:aspect-auto md:min-h-[570px]">
-            <Image
-              src={event.cardImage}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, 40vw"
-              className="object-cover"
-            />
+          <div className="relative aspect-[1.15] overflow-hidden bg-[#241420] md:aspect-auto md:min-h-[570px]">
             <Image
               src={event.image}
               alt={`${event.name} event artwork`}
               fill
               sizes="(max-width: 768px) 100vw, 40vw"
-              className="object-cover"
+              className="object-cover object-[center_25%] md:object-center"
             />
             <div className="absolute inset-0 bg-linear-to-t from-[#180b18]/85 via-transparent to-[#180b18]/15" />
             <div className="absolute right-6 bottom-6 left-6 text-white sm:right-8 sm:bottom-8 sm:left-8">

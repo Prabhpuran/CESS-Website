@@ -60,7 +60,7 @@ export const events: SpectraEvent[] = [
       "Maximum time: 3 minutes per performance",
       "Showcase your moves on the Spectra stage",
     ],
-    registrationFee: "₹70 per entry",
+    registrationFee: "₹70",
     registrationNotes: [
       "Audio tracks will be collected from participants later.",
       "Reporting time and slot schedules will be shared before the event.",
@@ -127,10 +127,9 @@ export const events: SpectraEvent[] = [
     highlights: [
       "An evening of rhythm, dancing, and celebration",
     ],
-    registrationFee: "₹150 per participant",
+    registrationFee: "₹150",
     registrationNotes: ["Dress code: Western"],
-    registrationUrl:
-      "upi://pay?pa=joshilavanya11@oksbi&pn=Lavanya%20Joshi&am=150&cu=INR&aid=uGICAgKCF1o7tFQ",
+    registrationUrl: "https://forms.gle/QvSuxTca5ZnZmccH8",
   },
   {
     slug: "spectra-got-latent",
@@ -167,7 +166,7 @@ export const events: SpectraEvent[] = [
       "Maximum performance time: 3 minutes",
       "Reporting time and performance slots will be shared before the event",
     ],
-    registrationFee: "₹70 per entry",
+    registrationFee: "₹70",
     registrationUrl: "https://forms.gle/i5EeNyQAkkEreJuB7",
   },
 ];

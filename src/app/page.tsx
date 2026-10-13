@@ -37,16 +37,9 @@ export default function Home() {
         className="overflow-hidden border-y border-primary/10 bg-[#f2e1da] py-5"
         aria-hidden="true"
       >
-        <div className="mx-auto flex w-max items-center justify-center gap-8 font-display text-xs tracking-[.22em] text-[#88535e] sm:gap-14">
-          {[
-            "CREATE",
-            "COMPETE",
-            "CONNECT",
-            "CELEBRATE",
-            "CREATE",
-            "COMPETE",
-          ].map((word, i) => (
-            <span key={i} className="flex items-center gap-8 sm:gap-14">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-3 px-4 font-display text-[10px] tracking-[.18em] text-[#88535e] sm:gap-x-10 sm:text-xs lg:gap-x-14">
+          {["CREATE", "COMPETE", "CONNECT", "CELEBRATE"].map((word) => (
+            <span key={word} className="flex items-center gap-3 sm:gap-5">
               {word}
               <Sparkles className="size-4 text-primary/60" />
             </span>
