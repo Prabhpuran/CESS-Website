@@ -87,7 +87,7 @@ export const events: SpectraEvent[] = [
       "Organised by CESS, Department of Computer Engineering and Technology",
     ],
     registrationUrl:
-      "https://unstop.com/p/hackerwrath-30-guru-nanak-dev-university-amritsar1764531lb=useMitLb&utm_medium=Share&utm_source=cesscom36699&utm_campaign=Online_coding_challenge",
+      "https://unstop.com/hackathons/hackerwrath-30-guru-nanak-dev-university-gndu-amritsar-1764531",
   },
   {
     slug: "mr-and-ms-spectra",
