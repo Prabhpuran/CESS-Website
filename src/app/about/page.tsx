@@ -28,8 +28,8 @@ export default function AboutPage() {
       <div className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 lg:px-12">
         <div className="relative mb-14 aspect-[4/3] overflow-hidden rounded-3xl bg-[#edc9bb] sm:aspect-[2.3]">
           <Image
-            src="/images/spectra-scene.svg"
-            alt="A warm architectural setting prepared for an illuminated festival"
+            src="/images/spectra-about-festival.webp"
+            alt="A university festival audience gathers for a warm, illuminated evening performance"
             fill
             sizes="(max-width: 1280px) 100vw, 1200px"
             className="object-cover object-center"
