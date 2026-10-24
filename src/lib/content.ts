@@ -64,6 +64,7 @@ export const events: SpectraEvent[] = [
     registrationNotes: [
       "Audio tracks will be collected from participants later.",
       "Reporting time and slot schedules will be shared before the event.",
+      "Groups with more than four participants can register offline at the desk in front of the library or contact CESS using the phone numbers on the Contact page.",
     ],
     registrationUrl: "https://forms.gle/t2n7Hethe25oM4Pg9",
   },
@@ -107,7 +108,9 @@ export const events: SpectraEvent[] = [
     ],
     registrationFee: "₹100",
     registrationNotes: [
-      "Dress provided.",
+      "Participants must bring their own dresses.",
+      "Hair and makeup will be provided.",
+      "Find further details in the WhatsApp group linked in the Google Form.",
       "Complete all required fields in the form and submit your payment receipt to complete registration.",
     ],
     registrationUrl: "https://forms.gle/CKgrkWueSndfMiXt7",
@@ -125,9 +128,9 @@ export const events: SpectraEvent[] = [
     accent: "#df7550",
     format: "Salsa night",
     highlights: [
-      "An evening of rhythm, dancing, and celebration",
+      "Bring a partner of your choice; partners can be any gender combination, including two women",
     ],
-    registrationFee: "₹150",
+    registrationFee: "₹150 for two people",
     registrationNotes: ["Dress code: Western"],
     registrationUrl: "https://forms.gle/QvSuxTca5ZnZmccH8",
   },
@@ -168,6 +171,9 @@ export const events: SpectraEvent[] = [
     ],
     registrationFee: "₹70",
     registrationUrl: "https://forms.gle/i5EeNyQAkkEreJuB7",
+    registrationNotes: [
+      "Groups with more than four participants can register offline at the desk in front of the library or contact CESS using the phone numbers on the Contact page.",
+    ],
   },
 ];
 
